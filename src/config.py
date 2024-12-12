@@ -1,0 +1,1 @@
+simplify_table = False # if True, makes the table take up less space

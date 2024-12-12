@@ -1,3 +1,4 @@
+from config import *
 grid = (
     ([0]*9),
     ([0]*9),
@@ -8,8 +9,11 @@ grid = (
     ([0]*9),
     ([0]*9),
     ([0]*9))
-x = 0
-y = 0
+largeGrid = (
+    ([0]*3),
+    ([0]*3),
+    ([0]*3),)
+
 pastMove = [0,0]
 currentMove = [0,0]
 playerTurn = 1
@@ -17,15 +21,20 @@ gameDone = False
 def drawGrid():
     for y in range(0,9):
         for x in range(0,9):
-            print(grid[y][x], end="")
-            if x == 2 or x == 5:
+            if grid[y][x] == 0:
+                print("-", end="")
+            elif grid[y][x] == 1:
+                print("X", end="")
+            else:
+                print("0", end="")
+            #print(grid[y][x], end="")
+            if (x == 2 or x == 5) and not simplify_table:
                 print("| ", end="")
-            if x < 8:
+            if x < 8 and not simplify_table:
                 print("|", end="")
-            
         x = 0
         print("")
-        if y == 2 or y == 5:
+        if (y == 2 or y == 5) and not simplify_table:
             print("---------------------")
 
 def firstMove():
@@ -55,6 +64,7 @@ def firstMove():
         grid[pastMove[1]][pastMove[0]] = 1
         pastMove[0] = x2
         pastMove[1] = y2
+        switchPlayer()
         drawGrid()
 
 def takeMove():
@@ -70,15 +80,14 @@ def takeMove():
         takeMove()
     currentMove[0] = (pastMove[0] - 1) * 3 + (xInput - 1)
     currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
-    print(pastMove[0])
-    print(pastMove[1])
     if grid[currentMove[1]][currentMove[0]] == 0:
-        grid[currentMove[1]][currentMove[0]] = 1
+        grid[currentMove[1]][currentMove[0]] = playerTurn
         pastMove[0] = xInput
         pastMove[1] = yInput
         switchPlayer()
         drawGrid()
     else:
+        print("Spot already taken")
         takeMove()
 
 def switchPlayer():
