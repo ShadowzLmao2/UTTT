@@ -72,6 +72,7 @@ def takeMove():
     currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
     if grid[currentMove[1]][currentMove[0]] == 0:
         grid[currentMove[1]][currentMove[0]] = playerTurn
+        checkSmallWin(pastMove[0],pastMove[1],xInput,yInput,playerTurn)
         pastMove[0] = xInput
         pastMove[1] = yInput
         switchPlayer()
@@ -90,8 +91,24 @@ def switchPlayer():
 def checkBigWin(): #WIP
     return
 
-def checkSmallWin(): #WIP
-    smallWin = False
+def checkSmallWin(x,y,xInput,yInput,playerTurn): #WIP
+    lastPlayedX = x*3+xInput
+    lastPlayedY = y*3+yInput
+    #if x != 2 and y != 2:
+        #smallWin = True
+    if grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY] == playerTurn and lastPlayedX == 1:
+        smallWin = True
+    if grid[lastPlayedX+1][lastPlayedY] == playerTurn and grid[lastPlayedX-1][lastPlayedY] == playerTurn and lastPlayedX == 2:
+        smallWin = True
+    if grid[lastPlayedX-2][lastPlayedY] == playerTurn and grid[lastPlayedX-1][lastPlayedY] == playerTurn and lastPlayedX == 3:
+        smallWin = True
+    if grid[lastPlayedX][lastPlayedY+2] == playerTurn and grid[lastPlayedX][lastPlayedX+1] == playerTurn and lastPlayedY == 1:
+        smallWin = True
+    if grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedX-1] == playerTurn and lastPlayedY == 2:
+        smallWin = True
+    if grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedX-1] == playerTurn and lastPlayedY == 3:
+        smallWin = True
     if smallWin == True:
+        largeGrid[x][y] = playerTurn
         checkBigWin()
     return
