@@ -6,5 +6,5 @@ def main():
     setUpGame()
     while gameDone != True:
         takeMove()
-        checkSmallWin()
+        #checkSmallWin()
 main()
