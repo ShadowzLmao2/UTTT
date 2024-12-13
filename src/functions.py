@@ -13,7 +13,7 @@ largeGrid = (
     ([0]*3),
     ([0]*3),
     ([0]*3))
-
+freeMove = False
 pastMove = [2,2]
 currentMove = [2,2]
 playerTurn = 1
@@ -63,14 +63,23 @@ def badMove():
 
 
 def takeMove():
+    if freeMove:
+        print("x1: ", end="")
+        initialX = int(input())
+        print("y1: ", end="")
+        initialY = int(input())
     print("x1: ", end="")
     xInput = int(input())
     print("y1: ", end="")
     yInput = int(input())
     if yInput < 1 or yInput > 3 or xInput < 1 or xInput > 3:
         badMove()
-    currentMove[0] = (pastMove[0] - 1) * 3 + (xInput - 1)
-    currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
+    if freeMove:
+        currentMove[0] = (initialX - 1) * 3 + (xInput - 1)
+        currentMove[1] = (initialY - 1) * 3 + (yInput - 1) 
+    else:
+        currentMove[0] = (pastMove[0] - 1) * 3 + (xInput - 1)
+        currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
     if grid[currentMove[1]][currentMove[0]] == 0:
         grid[currentMove[1]][currentMove[0]] = playerTurn
         checkSmallWin(pastMove[0],pastMove[1],xInput,yInput,playerTurn)
