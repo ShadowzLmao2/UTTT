@@ -12,10 +12,10 @@ grid = (
 largeGrid = (
     ([0]*3),
     ([0]*3),
-    ([0]*3),)
+    ([0]*3))
 
-pastMove = [0,0]
-currentMove = [0,0]
+pastMove = [2,2]
+currentMove = [2,2]
 playerTurn = 1
 gameDone = False
 def drawGrid():
@@ -46,7 +46,8 @@ def firstMove():
     print("y2: ", end="")
     y2 = int(input())
     if y2 < 1 or y2 > 3 or x2 < 1 or x2 > 3:
-        badMove()
+        print("Invalid location")
+        firstMove()
     pastMove[0] = (x1 - 1) * 3 + (x2 - 1)
     pastMove[1] = (y1 - 1) * 3 + (y2 - 1)
     if grid[pastMove[1]][pastMove[0]] == 0:
@@ -58,7 +59,7 @@ def firstMove():
 
 def badMove():
     print("Invalid location")
-    firstMove()
+    takeMove()
 
 
 def takeMove():
@@ -91,24 +92,39 @@ def switchPlayer():
 def checkBigWin(): #WIP
     return
 
-def checkSmallWin(x,y,xInput,yInput,playerTurn): #WIP
-    lastPlayedX = x*3+xInput
-    lastPlayedY = y*3+yInput
-    #if x != 2 and y != 2:
-        #smallWin = True
-    if grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY] == playerTurn and lastPlayedX == 1:
-        smallWin = True
-    if grid[lastPlayedX+1][lastPlayedY] == playerTurn and grid[lastPlayedX-1][lastPlayedY] == playerTurn and lastPlayedX == 2:
-        smallWin = True
-    if grid[lastPlayedX-2][lastPlayedY] == playerTurn and grid[lastPlayedX-1][lastPlayedY] == playerTurn and lastPlayedX == 3:
-        smallWin = True
-    if grid[lastPlayedX][lastPlayedY+2] == playerTurn and grid[lastPlayedX][lastPlayedX+1] == playerTurn and lastPlayedY == 1:
-        smallWin = True
-    if grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedX-1] == playerTurn and lastPlayedY == 2:
-        smallWin = True
-    if grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedX-1] == playerTurn and lastPlayedY == 3:
-        smallWin = True
+def checkSmallWin(x,y,xInput,yInput,playerTurn):
+    lastPlayedX = (x-1)*3+xInput
+    lastPlayedY = (y-1)*3+yInput
+    print(xInput)
+    print(yInput)
+    print(lastPlayedX)
+    print(lastPlayedY)
+    global smallWin
+    smallWin = False
+    #Top layer
+    if yInput == 1:
+        if grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY+2]  == playerTurn:
+            smallWin = True
+    elif yInput == 2:
+        if grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
+            smallWin = True
+    elif yInput == 3:
+        if grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
+            smallWin = True
+    if xInput == 1:
+        if grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
+            smallWin = True
+    elif xInput == 2:
+        if grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
+            smallWin = True
+    else: #xInput = 3
+        if grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX-2][lastPlayedY]  == playerTurn:
+            smallWin = True
     if smallWin == True:
         largeGrid[x][y] = playerTurn
-        checkBigWin()
+        #Assign all in small grid as won
+        for miniY in range(0,2):
+            for miniX in range(0,2):
+                grid[miniX+(x*3)][miniY+(y*3)] = playerTurn
+        #checkBigWin()
     return
