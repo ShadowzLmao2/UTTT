@@ -30,7 +30,7 @@ def drawGrid():
             elif grid[y][x] == 1:
                 print("X", end="")
             else:
-                print("0", end="")
+                print("O", end="")
             if (x == 2 or x == 5) and not simplify_table:
                 print("| ", end="")
             if x < 8 and not simplify_table:
@@ -49,7 +49,7 @@ def openMove():
     x2 = int(input())
     print("y2: ", end="")
     y2 = int(input())
-    if y2 < 1 or y2 > 3 or x2 < 1 or x2 > 3:
+    if y2 < 1 or y2 > 3 or x2 < 1 or x2 > 3 or y1 < 1 or y1 > 3 or x1 < 1 or x1 > 3:
         print("Invalid location")
         openMove()
     actualMoveX = (x1 - 1) * 3 + (x2 - 1)
@@ -100,37 +100,68 @@ def switchPlayer():
         playerTurn = 1
     return
     
-def checkBigWin(): #WIP
+def checkBigWin(playerTurn): #WIP
+    bigWin = False
+    if bigWin:
+        if playerTurn == 1:
+            print("Game Over, Winner is: X")
+        else: 
+            print("Game Over, Winner is: O")
     return
 
 def checkSmallWin(x,y,xInput,yInput,playerTurn):
-    lastPlayedX = (x-1)*3+xInput
-    lastPlayedY = (y-1)*3+yInput
+    lastPlayedX = x*3-4+xInput
+    lastPlayedY = y*3-4+yInput
     smallWin = False
-    #Top layer
-    if yInput == 1:
-        if grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY+2]  == playerTurn:
-            smallWin = True
-    elif yInput == 2:
-        if grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
-            smallWin = True
-    elif yInput == 3:
-        if grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
-            smallWin = True
-    if xInput == 1:
-        if grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
-            smallWin = True
-    elif xInput == 2:
-        if grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
-            smallWin = True
-    else: #xInput = 3
-        if grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX-2][lastPlayedY]  == playerTurn:
-            smallWin = True
-    if smallWin == True:
-        largeGrid[x][y] = playerTurn
-        #Assign all in small grid as said players marker
-        for miniY in range(0,2):
-            for miniX in range(0,2):
-                grid[miniX+(x*3)][miniY+(y*3)] = playerTurn
-        checkBigWin()
+    #Vertical Win
+    if yInput == 1 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY+2]  == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    if yInput == 2 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    if yInput == 3 and grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    #Horizontal Win
+    if xInput == 1 and grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    if xInput == 2 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    if xInput == 3 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX-2][lastPlayedY]  == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    #Diagonal Win
+    if   yInput == 2 and xInput == 2:
+        if grid[lastPlayedX+1][lastPlayedY+1] == playerTurn and grid[lastPlayedX-1][lastPlayedY-1] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+        if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+            return
+    #Check if middle is correct then looks at the opposite corner
+    if grid[x*3-1][y*3-1] != playerTurn:
+        return
+    if xInput == 1 and yInput == 1 and grid[lastPlayedX+2][lastPlayedY+2]:
+        confirmSmallWin(x,y,playerTurn)
+        return
+    if xInput == 1 and yInput == 3 and grid[lastPlayedX+2][lastPlayedY-2]:
+        confirmSmallWin(x,y,playerTurn)
+        return
+    if xInput == 3 and yInput == 1 and grid[lastPlayedX-2][lastPlayedY+2]:
+        confirmSmallWin(x,y,playerTurn)
+        return
+    if xInput == 3 and yInput == 3 and grid[lastPlayedX-2][lastPlayedY-2]:
+        confirmSmallWin(x,y,playerTurn)
+    return
+
+def confirmSmallWin(x,y,playerTurn):
+    print("Win")
+    largeGrid[x-1][y-1] = playerTurn
+    for miniY in range(0,3):
+        for miniX in range(0,3):
+            grid[miniY+(y*3-3)][miniX+(x*3-3)] = playerTurn
+    checkBigWin(playerTurn)
     return
