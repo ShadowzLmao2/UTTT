@@ -57,6 +57,8 @@ def openMove():
     if grid[acatualMoveY][actualMoveX] == 0:
         grid[acatualMoveY][actualMoveX] = 1
         freeMove = False
+        global pastMoveY
+        global pastMoveX
         pastMoveX = x2
         pastMoveY = y2
         switchPlayer()
@@ -76,8 +78,10 @@ def takeMove():
     yInput = int(input())
     if yInput < 1 or yInput > 3 or xInput < 1 or xInput > 3:
         badMove()
-    recentMoveX = (pastMoveX - 1) * 3 + (xInput - 1)
-    recentMoveY = (pastMoveY - 1) * 3 + (yInput - 1) 
+    global pastMoveX
+    global pastMoveY
+    recentMoveX = pastMoveX * 3 - 4 + xInput
+    recentMoveY = pastMoveY * 3 - 4 + yInput
     if grid[recentMoveY][recentMoveX] == 0:
         grid[recentMoveY][recentMoveX] = playerTurn
         checkSmallWin(pastMoveX,pastMoveY,xInput,yInput,playerTurn)
