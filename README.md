@@ -11,7 +11,7 @@ Number of possible gamestates per move
     Every odd move is player 1 and every even move is player 2.
     Notation uses the xy coordinates of the large grid and then the small grid. Player turns are separated by commas. For example, middle-middle and middle-topleft is denoted as 2222,2211
     Turn 1: 15
-        Ideal Move: Middle-Middle (2222)
+        Ideal Move: Middle-Middle (2222), second best is Middle-Corner (2211)
     Turn 2: 103 (moves for player two)
         Ideal Move: after 2222, 2211 is ideal according to AI
     Turn 3: ?

@@ -14,8 +14,12 @@ largeGrid = (
     ([0]*3),
     ([0]*3))
 freeMove = True
-pastMove = [2,2]
-currentMove = [2,2]
+pastMoveX = 2
+pastMoveY = 2
+actualMoveX = 2
+actualMoveY = 2
+recentMoveX = 2
+recentMoveY = 2
 playerTurn = 1
 gameDone = False
 def drawGrid():
@@ -48,15 +52,18 @@ def openMove():
     if y2 < 1 or y2 > 3 or x2 < 1 or x2 > 3:
         print("Invalid location")
         openMove()
-    freeMove = False
-    pastMove[0] = (x1 - 1) * 3 + (x2 - 1)
-    pastMove[1] = (y1 - 1) * 3 + (y2 - 1)
-    if grid[pastMove[1]][pastMove[0]] == 0:
-        grid[pastMove[1]][pastMove[0]] = 1
-        pastMove[0] = x2
-        pastMove[1] = y2
+    actualMoveX = (x1 - 1) * 3 + (x2 - 1)
+    acatualMoveY = (y1 - 1) * 3 + (y2 - 1)
+    if grid[acatualMoveY][actualMoveX] == 0:
+        grid[acatualMoveY][actualMoveX] = 1
+        freeMove = False
+        pastMoveX = x2
+        pastMoveY = y2
         switchPlayer()
         drawGrid()
+    else: 
+        print("Invalid location")
+        openMove()
 
 def badMove():
     print("Invalid location")
@@ -69,13 +76,13 @@ def takeMove():
     yInput = int(input())
     if yInput < 1 or yInput > 3 or xInput < 1 or xInput > 3:
         badMove()
-    currentMove[0] = (pastMove[0] - 1) * 3 + (xInput - 1)
-    currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
-    if grid[currentMove[1]][currentMove[0]] == 0:
-        grid[currentMove[1]][currentMove[0]] = playerTurn
-        checkSmallWin(pastMove[0],pastMove[1],xInput,yInput,playerTurn)
-        pastMove[0] = xInput
-        pastMove[1] = yInput
+    recentMoveX = (pastMoveX - 1) * 3 + (xInput - 1)
+    recentMoveY = (pastMoveY - 1) * 3 + (yInput - 1) 
+    if grid[recentMoveY][recentMoveX] == 0:
+        grid[recentMoveY][recentMoveX] = playerTurn
+        checkSmallWin(pastMoveX,pastMoveY,xInput,yInput,playerTurn)
+        pastMoveX = xInput
+        pastMoveY = yInput
         switchPlayer()
         drawGrid()
     else:
