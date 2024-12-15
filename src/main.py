@@ -1,9 +1,9 @@
 from functions import *
-def setUpGame():
-    drawGrid()
-    firstMove()
 def main():
-    setUpGame()
+    drawGrid()
     while gameDone != True:
-        takeMove()
-main()
+        if freeMove:
+            openMove()
+        else:
+            takeMove()
+main() 

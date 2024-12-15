@@ -13,7 +13,7 @@ largeGrid = (
     ([0]*3),
     ([0]*3),
     ([0]*3))
-freeMove = False
+freeMove = True
 pastMove = [2,2]
 currentMove = [2,2]
 playerTurn = 1
@@ -36,7 +36,7 @@ def drawGrid():
         if (y == 2 or y == 5) and not simplify_table:
             print("---------------------")
 
-def firstMove():
+def openMove():
     print("x1: ", end="")
     x1 = int(input())
     print("y1: ", end="")
@@ -47,7 +47,8 @@ def firstMove():
     y2 = int(input())
     if y2 < 1 or y2 > 3 or x2 < 1 or x2 > 3:
         print("Invalid location")
-        firstMove()
+        openMove()
+    freeMove = False
     pastMove[0] = (x1 - 1) * 3 + (x2 - 1)
     pastMove[1] = (y1 - 1) * 3 + (y2 - 1)
     if grid[pastMove[1]][pastMove[0]] == 0:
@@ -61,25 +62,15 @@ def badMove():
     print("Invalid location")
     takeMove()
 
-
 def takeMove():
-    if freeMove:
-        print("x1: ", end="")
-        initialX = int(input())
-        print("y1: ", end="")
-        initialY = int(input())
-    print("x1: ", end="")
+    print("x: ", end="")
     xInput = int(input())
-    print("y1: ", end="")
+    print("y: ", end="")
     yInput = int(input())
     if yInput < 1 or yInput > 3 or xInput < 1 or xInput > 3:
         badMove()
-    if freeMove:
-        currentMove[0] = (initialX - 1) * 3 + (xInput - 1)
-        currentMove[1] = (initialY - 1) * 3 + (yInput - 1) 
-    else:
-        currentMove[0] = (pastMove[0] - 1) * 3 + (xInput - 1)
-        currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
+    currentMove[0] = (pastMove[0] - 1) * 3 + (xInput - 1)
+    currentMove[1] = (pastMove[1] - 1) * 3 + (yInput - 1) 
     if grid[currentMove[1]][currentMove[0]] == 0:
         grid[currentMove[1]][currentMove[0]] = playerTurn
         checkSmallWin(pastMove[0],pastMove[1],xInput,yInput,playerTurn)
@@ -104,11 +95,6 @@ def checkBigWin(): #WIP
 def checkSmallWin(x,y,xInput,yInput,playerTurn):
     lastPlayedX = (x-1)*3+xInput
     lastPlayedY = (y-1)*3+yInput
-    print(xInput)
-    print(yInput)
-    print(lastPlayedX)
-    print(lastPlayedY)
-    global smallWin
     smallWin = False
     #Top layer
     if yInput == 1:
@@ -131,9 +117,9 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
             smallWin = True
     if smallWin == True:
         largeGrid[x][y] = playerTurn
-        #Assign all in small grid as won
+        #Assign all in small grid as said players marker
         for miniY in range(0,2):
             for miniX in range(0,2):
                 grid[miniX+(x*3)][miniY+(y*3)] = playerTurn
-        #checkBigWin()
+        checkBigWin()
     return
