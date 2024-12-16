@@ -1,4 +1,4 @@
-from config import simplify_table
+from config import *
 from solve_game import *
 from import_game import *
 grid = (
@@ -26,7 +26,11 @@ def drawGrid():
         for x in range(0,9):
             if grid[x][y] == 0:
                 print("-", end="")
-            elif grid[x][y] == 1:
+            elif grid[x][y] == 1 and not x_and_o_numbers:
+                print("X", end="")
+            elif grid[x][y] == 1 and not x_and_o_numbers:
+                print("O", end="")
+            elif grid[x][y] == 2 and x_and_o_numbers:
                 print("X", end="")
             else:
                 print("O", end="")
