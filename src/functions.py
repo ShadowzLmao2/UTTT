@@ -25,9 +25,9 @@ gameDone = False
 def drawGrid():
     for y in range(0,9):
         for x in range(0,9):
-            if grid[y][x] == 0:
+            if grid[x][y] == 0:
                 print("-", end="")
-            elif grid[y][x] == 1:
+            elif grid[x][y] == 1:
                 print("X", end="")
             else:
                 print("O", end="")
@@ -54,7 +54,7 @@ def openMove():
     actualMoveX = (x1 - 1) * 3 + (x2 - 1)
     actualMoveY = (y1 - 1) * 3 + (y2 - 1)
     if grid[actualMoveX][actualMoveY] == 0:
-        grid[actualMoveX][actualMoveY] = 1
+        grid[actualMoveX][actualMoveY] = playerTurn
         freeMove = False
         global pastMoveY
         global pastMoveX
@@ -62,6 +62,8 @@ def openMove():
         pastMoveY = y2
         switchPlayer()
         drawGrid()
+        shouldGiveFreeMove(pastMoveX,pastMoveY)
+        #shouldEndGame
     else: 
         print("Invalid location")
         openMove()
@@ -88,6 +90,7 @@ def takeMove():
         pastMoveY = yInput
         switchPlayer()
         drawGrid()
+        shouldGiveFreeMove(xInput,yInput)
     else:
         badMove()
 
@@ -161,4 +164,9 @@ def confirmSmallWin(x,y,playerTurn):
         for miniX in range(0,3):
             grid[miniY+(y*3-3)][miniX+(x*3-3)] = playerTurn
     #checkBigWin(playerTurn)
+    return
+
+def shouldGiveFreeMove(pastX,pastY):
+    if largeGrid[pastX-1][pastY-1] != 0:
+        openMove()
     return
