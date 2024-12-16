@@ -108,19 +108,19 @@ def switchPlayer():
 def checkBigWin(x,y,playerTurn): #x and y are based on largeGrid coords, and can be 0, 1, or 2
     bigWin = False
     global gameDone
-    #Vertical Win
-    if x == 0 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y+2] == playerTurn:
-        bigWin = True
-    if x == 1 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y-1] == playerTurn:
-        bigWin = True
-    if x == 2 and largeGrid[x][y-2] == playerTurn and largeGrid[x][y-1] == playerTurn:
-        bigWin = True
     #Horizontal Win
-    if y == 0 and largeGrid[x+1][y] == playerTurn and largeGrid[x+2][y] == playerTurn:
+    if y == 0 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y+2] == playerTurn:
         bigWin = True
-    if y == 1 and largeGrid[x+1][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+    if y == 1 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y-1] == playerTurn:
         bigWin = True
-    if y == 2 and largeGrid[x-2][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+    if y == 2 and largeGrid[x][y-2] == playerTurn and largeGrid[x][y-1] == playerTurn:
+        bigWin = True
+    #Vertical Win
+    if x == 0 and largeGrid[x+1][y] == playerTurn and largeGrid[x+2][y] == playerTurn:
+        bigWin = True
+    if x == 1 and largeGrid[x+1][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+        bigWin = True
+    if x == 2 and largeGrid[x-2][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
         bigWin = True
     #Diagonals
     if largeGrid[1][1] == playerTurn and (largeGrid[0][0] == playerTurn and largeGrid[2][2] == playerTurn) or (largeGrid[0][2] == playerTurn and largeGrid[2][0] == playerTurn):
