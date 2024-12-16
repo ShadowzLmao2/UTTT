@@ -35,7 +35,6 @@ def drawGrid():
                 print("| ", end="")
             if x < 8 and not simplify_table:
                 print("|", end="")
-        x = 0
         print("")
         if (y == 2 or y == 5) and not simplify_table:
             print("---------------------")

@@ -13,5 +13,5 @@ Number of possible gamestates per move:
     Turn 1: 15
         Ideal Move: Middle-Middle (2222), second best is Middle-Corner (2211)
     Turn 2: 103 (moves for player two)
-        Ideal Move: after 2222, 2211 is ideal according to AI
+        Ideal Move: after 2222, 2211 is ideal according to AI, I can not explain why
     Turn 3: ?

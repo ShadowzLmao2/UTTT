@@ -1,10 +1,22 @@
 from functions import *
 from solve_game import *
+from import_game import *
 def main():
-    drawGrid()
-    openMove()
+    shouldImport()
     if simplify_board:
         simplifyBoard()
     while gameDone != True:
         takeMove()
+
+def shouldImport():
+    print("Would you like to import a game? (y/n): ", end="")
+    yesOrNoInput = input()
+    if yesOrNoInput == "y":
+        askForBoardState()
+        drawGrid()
+    else:
+        drawGrid()
+        openMove()
+    return
+
 main() 
