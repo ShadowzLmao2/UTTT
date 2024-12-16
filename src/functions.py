@@ -109,25 +109,19 @@ def checkBigWin(x,y,playerTurn): #x and y are based on largeGrid coords, and can
     #Vertical Win
     if x == 0 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y+2] == playerTurn:
         bigWin = True
-    if x == 1 and  largeGrid[x][y+1] == playerTurn and largeGrid[x][y-1] == playerTurn:
+    if x == 1 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y-1] == playerTurn:
         bigWin = True
-    if x == 2 and  largeGrid[x][y-2] == playerTurn and largeGrid[x][y-1] == playerTurn:
+    if x == 2 and largeGrid[x][y-2] == playerTurn and largeGrid[x][y-1] == playerTurn:
         bigWin = True
     #Horizontal Win
     if y == 0 and largeGrid[x+1][y] == playerTurn and largeGrid[x+2][y] == playerTurn:
         bigWin = True
-    if y == 1 and  largeGrid[x+1][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+    if y == 1 and largeGrid[x+1][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
         bigWin = True
-    if y == 2 and  largeGrid[x-2][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+    if y == 2 and largeGrid[x-2][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
         bigWin = True
     #Diagonals
-    if largeGrid[1][1] != playerTurn:
-        return
-    if (x == 0 and y == 0 and largeGrid[2][2] == playerTurn) or (x == 2 and y == 2 and largeGrid[0][0] == playerTurn):
-        bigWin = True
-    if (x == 2 and y == 0 and largeGrid[0][2] == playerTurn) or (x == 0 and y == 2 and largeGrid[2][0] == playerTurn):
-        bigWin = True
-    if x == 1 and y == 1 and ((largeGrid[0][0] == playerTurn and largeGrid[2][2] == playerTurn) or (largeGrid[0][2] == playerTurn and largeGrid[2][0] == playerTurn)):
+    if largeGrid[1][1] == playerTurn and (largeGrid[0][0] == playerTurn and largeGrid[2][2] == playerTurn) or (largeGrid[0][2] == playerTurn and largeGrid[2][0] == playerTurn):
         bigWin = True
     if bigWin:
         if playerTurn == 1:
