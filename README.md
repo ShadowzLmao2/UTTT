@@ -9,9 +9,9 @@ The scope of the project includes:
 
 Why this is coded in Python: this is my first Python project and wanted to learn how to code in Python
 
+Notation: On the first turn or if the player can move anywhere, the xy coordinates of the bigger grid are written first (ex 1.2222 being middle-middle). After a move, a comma is written and then the second players move is written (ex. 1.2222,12). Different turns are represented by a space and then the turn number and a period (ex. 1.2222,12 2.22,33). Moves are assumed to be in the bigger grid where the last move was unless 4 digits are written.
+
 Number of possible gamestates per move:
-- Every odd move is player 1 and every even move is player 2.
-- Notation uses the xy coordinates of the large grid and then the small grid. Player turns are separated by commas. For example, middle-middle and middle-topleft is denoted as 2222,2211
-    - Turn 1: 15 
-    - Turn 2: 103
-    - Turn 3: ?
+- Turn 1: 15 
+- Turn 2: 103
+- Turn 3: ?
