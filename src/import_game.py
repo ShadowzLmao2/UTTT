@@ -1,15 +1,6 @@
 from functions import *
-def getBigBoard():
-    return
-
-def getSmallerBoards():
-    return
-
-def getEntireBoard():
-    confirmSmallWin(1,1,1)
-    return
-
 def askForBoardState():
+    #takes from 9 to 81 inputs to complete, need a better solution
     for y in range (1,4):
         for x in range (1,4):
             print("Which player won x", x, "and y", y, "?")

@@ -2,9 +2,11 @@ from functions import *
 from solve_game import *
 from import_game import *
 def main():
-    shouldImport()
-    if simplify_board:
-        simplifyBoard()
+    if ask_to_import:
+        shouldImport()
+    else:
+        drawGrid()
+        openMove()
     while gameDone != True:
         takeMove()
 
