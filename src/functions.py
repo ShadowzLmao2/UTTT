@@ -106,11 +106,13 @@ def switchPlayer():
     
 def checkBigWin(playerTurn): #WIP
     bigWin = False
+    global gameDone
     if bigWin:
         if playerTurn == 1:
             print("Game Over, Winner is: X")
         else: 
             print("Game Over, Winner is: O")
+        gameDone = True
     return
 
 def checkSmallWin(x,y,xInput,yInput,playerTurn):
