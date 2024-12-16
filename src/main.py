@@ -1,6 +1,7 @@
 from functions import *
 from solve_game import *
 from import_game import *
+from config.general import *
 def main():
     if ask_to_import:
         shouldImport()

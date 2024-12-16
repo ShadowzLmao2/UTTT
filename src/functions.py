@@ -1,6 +1,5 @@
-from config import *
+from config.general import *
 from solve_game import *
-from config import *
 grid = (
     ([0]*9),
     ([0]*9),
