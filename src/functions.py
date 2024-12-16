@@ -1,4 +1,4 @@
-from config.general import *
+from config import simplify_table
 from solve_game import *
 grid = (
     ([0]*9),
@@ -66,7 +66,6 @@ def openMove():
         drawGrid()
         if not gameDone:
             shouldGiveFreeMove(pastMoveX,pastMoveY)
-        #shouldEndGame
     else: 
         print("Invalid location")
         openMove()
@@ -157,15 +156,15 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
         if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
     #Check if middle is correct then looks at the opposite corner
-    if grid[x*3-1][y*3-1] != playerTurn:
+    if grid[x*3-2][y*3-2] != playerTurn:
         return
-    if xInput == 1 and yInput == 1 and grid[lastPlayedX+2][lastPlayedY+2]:
+    if xInput == 1 and yInput == 1 and grid[lastPlayedX+2][lastPlayedY+2] == playerTurn:
         confirmSmallWin(x,y,playerTurn)
-    if xInput == 1 and yInput == 3 and grid[lastPlayedX+2][lastPlayedY-2]:
+    if xInput == 1 and yInput == 3 and grid[lastPlayedX+2][lastPlayedY-2] == playerTurn:
         confirmSmallWin(x,y,playerTurn)
-    if xInput == 3 and yInput == 1 and grid[lastPlayedX-2][lastPlayedY+2]:
+    if xInput == 3 and yInput == 1 and grid[lastPlayedX-2][lastPlayedY+2] == playerTurn:
         confirmSmallWin(x,y,playerTurn)
-    if xInput == 3 and yInput == 3 and grid[lastPlayedX-2][lastPlayedY-2]:
+    if xInput == 3 and yInput == 3 and grid[lastPlayedX-2][lastPlayedY-2] == playerTurn:
         confirmSmallWin(x,y,playerTurn)
     return
 
