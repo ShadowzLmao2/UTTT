@@ -6,6 +6,7 @@ The scope of the project includes:
 - improving any program that solves the endgame by expanding the depth
 - showing the best openings and temporarily good openings (until it is solved)
 - hopefully not using Monte Carlo code because I don't want to read
+
 Why this is coded in Python: this is my first Python project and wanted to learn how to code in Python
 Number of possible gamestates per move:
     Every odd move is player 1 and every even move is player 2.
