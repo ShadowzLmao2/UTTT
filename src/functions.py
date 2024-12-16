@@ -61,9 +61,11 @@ def openMove():
         global pastMoveX
         pastMoveX = x2
         pastMoveY = y2
+        checkSmallWin(pastMoveX,pastMoveY,x2,y2,playerTurn)
         switchPlayer()
         drawGrid()
-        shouldGiveFreeMove(pastMoveX,pastMoveY)
+        if not gameDone:
+            shouldGiveFreeMove(pastMoveX,pastMoveY)
         #shouldEndGame
     else: 
         print("Invalid location")
