@@ -1,5 +1,6 @@
 from config import simplify_table
 from solve_game import *
+from import_game import *
 grid = (
     ([0]*9),
     ([0]*9),
@@ -172,7 +173,7 @@ def confirmSmallWin(x,y,playerTurn):
     largeGrid[x-1][y-1] = playerTurn
     for miniY in range(0,3):
         for miniX in range(0,3):
-            grid[miniY+(y*3-3)][miniX+(x*3-3)] = playerTurn
+            grid[miniX+(x*3-3)][miniY+(y*3-3)] = playerTurn
     checkBigWin(x-1,y-1,playerTurn)
     return
 
