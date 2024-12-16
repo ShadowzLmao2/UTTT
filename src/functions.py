@@ -62,7 +62,7 @@ def openMove():
         global pastMoveX
         pastMoveX = x2
         pastMoveY = y2
-        checkSmallWin(pastMoveX,pastMoveY,x2,y2,playerTurn)
+        checkSmallWin(x1,x1,x2,y2,playerTurn)
         switchPlayer()
         drawGrid()
         if not gameDone:
@@ -71,17 +71,14 @@ def openMove():
         print("Invalid location")
         openMove()
 
-def badMove():
-    print("Invalid location")
-    takeMove()
-
 def takeMove():
     print("x: ", end="")
     xInput = int(input())
     print("y: ", end="")
     yInput = int(input())
     if yInput < 1 or yInput > 3 or xInput < 1 or xInput > 3:
-        badMove()
+        print("Invalid location")
+        takeMove()
     global pastMoveX
     global pastMoveY
     recentMoveX = pastMoveX * 3 - 4 + xInput
@@ -95,7 +92,8 @@ def takeMove():
         drawGrid()
         shouldGiveFreeMove(xInput,yInput)
     else:
-        badMove()
+        print("Invalid location")
+        takeMove()
 
 def switchPlayer():
     global playerTurn
@@ -151,7 +149,7 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
     if xInput == 3 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX-2][lastPlayedY]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
     #Diagonal Win
-    if   yInput == 2 and xInput == 2:
+    if yInput == 2 and xInput == 2:
         if grid[lastPlayedX+1][lastPlayedY+1] == playerTurn and grid[lastPlayedX-1][lastPlayedY-1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
         if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
