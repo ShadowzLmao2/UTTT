@@ -103,9 +103,32 @@ def switchPlayer():
         playerTurn = 1
     return
     
-def checkBigWin(playerTurn): #WIP
+def checkBigWin(x,y,playerTurn): #x and y are based on largeGrid coords, and can be 0, 1, or 2
     bigWin = False
     global gameDone
+    #Vertical Win
+    if x == 0 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y+2] == playerTurn:
+        bigWin = True
+    if x == 1 and  largeGrid[x][y+1] == playerTurn and largeGrid[x][y-1] == playerTurn:
+        bigWin = True
+    if x == 2 and  largeGrid[x][y-2] == playerTurn and largeGrid[x][y-1] == playerTurn:
+        bigWin = True
+    #Horizontal Win
+    if y == 0 and largeGrid[x+1][y] == playerTurn and largeGrid[x+2][y] == playerTurn:
+        bigWin = True
+    if y == 1 and  largeGrid[x+1][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+        bigWin = True
+    if y == 2 and  largeGrid[x-2][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+        bigWin = True
+    #Diagonals
+    if largeGrid[1][1] != playerTurn:
+        return
+    if (x == 0 and y == 0 and largeGrid[2][2] == playerTurn) or (x == 2 and y == 2 and largeGrid[0][0] == playerTurn):
+        bigWin = True
+    if (x == 2 and y == 0 and largeGrid[0][2] == playerTurn) or (x == 0 and y == 2 and largeGrid[2][0] == playerTurn):
+        bigWin = True
+    if x == 1 and y == 1 and ((largeGrid[0][0] == playerTurn and largeGrid[2][2] == playerTurn) or (largeGrid[0][2] == playerTurn and largeGrid[2][0] == playerTurn)):
+        bigWin = True
     if bigWin:
         if playerTurn == 1:
             print("Game Over, Winner is: X")
@@ -120,43 +143,32 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
     #Vertical Win
     if yInput == 1 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY+2]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     if yInput == 2 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     if yInput == 3 and grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     #Horizontal Win
     if xInput == 1 and grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     if xInput == 2 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     if xInput == 3 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX-2][lastPlayedY]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     #Diagonal Win
     if   yInput == 2 and xInput == 2:
         if grid[lastPlayedX+1][lastPlayedY+1] == playerTurn and grid[lastPlayedX-1][lastPlayedY-1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
         if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-            #return
     #Check if middle is correct then looks at the opposite corner
     if grid[x*3-1][y*3-1] != playerTurn:
         return
     if xInput == 1 and yInput == 1 and grid[lastPlayedX+2][lastPlayedY+2]:
         confirmSmallWin(x,y,playerTurn)
-        #return
     if xInput == 1 and yInput == 3 and grid[lastPlayedX+2][lastPlayedY-2]:
         confirmSmallWin(x,y,playerTurn)
-        #return
     if xInput == 3 and yInput == 1 and grid[lastPlayedX-2][lastPlayedY+2]:
         confirmSmallWin(x,y,playerTurn)
-        #return
     if xInput == 3 and yInput == 3 and grid[lastPlayedX-2][lastPlayedY-2]:
         confirmSmallWin(x,y,playerTurn)
     return
@@ -166,7 +178,7 @@ def confirmSmallWin(x,y,playerTurn):
     for miniY in range(0,3):
         for miniX in range(0,3):
             grid[miniY+(y*3-3)][miniX+(x*3-3)] = playerTurn
-    #checkBigWin(playerTurn)
+    checkBigWin(x-1,y-1,playerTurn)
     return
 
 def shouldGiveFreeMove(pastX,pastY):
