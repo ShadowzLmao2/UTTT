@@ -2,10 +2,10 @@
 Solving Ultimate Tic-Tac-Toe is the aim
 The goal is to create opening theory and include the already solved endgame code to make the best AI assistant and opponent. 
 The scope of the project includes:
-- showing the amount of possible positions below 
+- showing the amount of possible positions per turn and in total below 
 - improving any program that solves the endgame by expanding the depth
-- showing the best openings and temporarily good openings (until it is solved)
-- hopefully not using Monte Carlo code because I don't want to read
+- proving the best openings and temporarily good openings (until it is solved)
+- ideally not using Monte Carlo code because I don't want to read it
 
 Why this is coded in Python: this is my first Python project and wanted to learn how to code in Python
 
