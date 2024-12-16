@@ -11,10 +11,7 @@ grid = (
     ([0]*9),
     ([0]*9),
     ([0]*9))
-largeGrid = (
-    ([0]*3),
-    ([0]*3),
-    ([0]*3))
+largeGrid = ([0]*9)
 freeMove = True
 pastMoveX = 2
 pastMoveY = 2
@@ -64,14 +61,16 @@ def openMove():
         pastMoveY = y2
         checkSmallWin(x1,x1,x2,y2,playerTurn)
         switchPlayer()
-        drawGrid()
         if not gameDone:
+            drawGrid()
             shouldGiveFreeMove(pastMoveX,pastMoveY)
     else: 
         print("Invalid location")
         openMove()
 
 def takeMove():
+    if gameDone:
+        return
     print("x: ", end="")
     xInput = int(input())
     print("y: ", end="")
@@ -107,21 +106,21 @@ def checkBigWin(x,y,playerTurn): #x and y are based on largeGrid coords, and can
     bigWin = False
     global gameDone
     #Horizontal Win
-    if y == 0 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y+2] == playerTurn:
+    if y == 0 and largeGrid[x+(y+1)*3] == playerTurn and largeGrid[x+(y-1)*3] == playerTurn:
         bigWin = True
-    if y == 1 and largeGrid[x][y+1] == playerTurn and largeGrid[x][y-1] == playerTurn:
+    if y == 1 and largeGrid[x+(y+1)*3] == playerTurn and largeGrid[x+(y-1)*3] == playerTurn:
         bigWin = True
-    if y == 2 and largeGrid[x][y-2] == playerTurn and largeGrid[x][y-1] == playerTurn:
+    if y == 2 and largeGrid[x+(y+-2)*3] == playerTurn and largeGrid[x+(y-1)*3] == playerTurn:
         bigWin = True
     #Vertical Win
-    if x == 0 and largeGrid[x+1][y] == playerTurn and largeGrid[x+2][y] == playerTurn:
+    if x == 0 and largeGrid[x+1+y*3] == playerTurn and largeGrid[x+2+y*3] == playerTurn:
         bigWin = True
-    if x == 1 and largeGrid[x+1][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+    if x == 1 and largeGrid[x+1+y*3] == playerTurn and largeGrid[x-1+y*3] == playerTurn:
         bigWin = True
-    if x == 2 and largeGrid[x-2][y] == playerTurn and largeGrid[x-1][y] == playerTurn:
+    if x == 2 and largeGrid[x-2+y*3] == playerTurn and largeGrid[x-1+y*3] == playerTurn:
         bigWin = True
     #Diagonals
-    if largeGrid[1][1] == playerTurn and (largeGrid[0][0] == playerTurn and largeGrid[2][2] == playerTurn) or (largeGrid[0][2] == playerTurn and largeGrid[2][0] == playerTurn):
+    if largeGrid[4] == playerTurn and (largeGrid[0] == playerTurn and largeGrid[8] == playerTurn) or (largeGrid[6] == playerTurn and largeGrid[2] == playerTurn):
         bigWin = True
     if bigWin:
         if playerTurn == 1:
@@ -132,6 +131,8 @@ def checkBigWin(x,y,playerTurn): #x and y are based on largeGrid coords, and can
     return
 
 def checkSmallWin(x,y,xInput,yInput,playerTurn):
+    if gameDone:
+        return
     lastPlayedX = x*3-4+xInput
     lastPlayedY = y*3-4+yInput
     #Vertical Win
@@ -168,7 +169,9 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
     return
 
 def confirmSmallWin(x,y,playerTurn):
-    largeGrid[x-1][y-1] = playerTurn
+    if gameDone:
+        return
+    largeGrid[x-1+(y-1)*3] = playerTurn
     for miniY in range(0,3):
         for miniX in range(0,3):
             grid[miniX+(x*3-3)][miniY+(y*3-3)] = playerTurn
@@ -176,6 +179,6 @@ def confirmSmallWin(x,y,playerTurn):
     return
 
 def shouldGiveFreeMove(pastX,pastY):
-    if largeGrid[pastX-1][pastY-1] != 0:
+    if largeGrid[pastX-1+(pastY-1)*3] != 0:
         openMove()
     return
