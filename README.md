@@ -8,6 +8,7 @@ The scope of the project includes:
 - hopefully not using Monte Carlo code because I don't want to read
 
 Why this is coded in Python: this is my first Python project and wanted to learn how to code in Python
+
 Number of possible gamestates per move:
     Every odd move is player 1 and every even move is player 2.
     Notation uses the xy coordinates of the large grid and then the small grid. Player turns are separated by commas. For example, middle-middle and middle-topleft is denoted as 2222,2211
