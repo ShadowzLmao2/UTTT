@@ -14,4 +14,5 @@ Notation: On the first turn or if the player can move anywhere, the xy coordinat
 Number of possible gamestates per move:
 - Turn 1: 15 
 - Turn 2: 103
-- Turn 3: ?
+- Turn 3: 821
+- Turn 4: ?

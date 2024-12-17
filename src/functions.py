@@ -186,3 +186,12 @@ def shouldGiveFreeMove(pastX,pastY):
     if largeGrid[pastX-1+(pastY-1)*3] != 0:
         openMove()
     return
+
+def countEmptySpaces(array):
+    count = 0
+    for y in range(0,9):
+        for x in range(0,9):
+            if array[x][y] == 0:
+                count+=1
+    print(count)
+    return count
