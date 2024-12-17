@@ -1,14 +1,14 @@
 from functions import *
-from solve_game import *
 from import_game import *
 from config import *
+
 def main():
     if ask_to_import:
         shouldImport()
     else:
         drawGrid()
         openMove()
-    while gameDone != True:
+    while gameDone == False:
         takeMove()
 
 def shouldImport():

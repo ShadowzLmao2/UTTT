@@ -1,5 +1,5 @@
 from config import *
-from solve_game import *
+#from solve_game import *
 from import_game import *
 grid = (
     ([0]*9),
@@ -21,6 +21,7 @@ recentMoveX = 2
 recentMoveY = 2
 playerTurn = 1
 gameDone = False
+
 def drawGrid():
     for y in range(0,9):
         for x in range(0,9):
@@ -28,7 +29,7 @@ def drawGrid():
                 print("-", end="")
             elif grid[x][y] == 1 and not x_and_o_numbers:
                 print("X", end="")
-            elif grid[x][y] == 1 and not x_and_o_numbers:
+            elif grid[x][y] == 2 and not x_and_o_numbers:
                 print("O", end="")
             elif grid[x][y] == 2 and x_and_o_numbers:
                 print("X", end="")
@@ -160,16 +161,15 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
         if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
     #Check if middle is correct then looks at the opposite corner
-    if grid[x*3-2][y*3-2] != playerTurn:
-        return
-    if xInput == 1 and yInput == 1 and grid[lastPlayedX+2][lastPlayedY+2] == playerTurn:
-        confirmSmallWin(x,y,playerTurn)
-    if xInput == 1 and yInput == 3 and grid[lastPlayedX+2][lastPlayedY-2] == playerTurn:
-        confirmSmallWin(x,y,playerTurn)
-    if xInput == 3 and yInput == 1 and grid[lastPlayedX-2][lastPlayedY+2] == playerTurn:
-        confirmSmallWin(x,y,playerTurn)
-    if xInput == 3 and yInput == 3 and grid[lastPlayedX-2][lastPlayedY-2] == playerTurn:
-        confirmSmallWin(x,y,playerTurn)
+    if grid[x*3-2][y*3-2] == playerTurn:
+        if xInput == 1 and yInput == 1 and grid[lastPlayedX+2][lastPlayedY+2] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+        if xInput == 1 and yInput == 3 and grid[lastPlayedX+2][lastPlayedY-2] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+        if xInput == 3 and yInput == 1 and grid[lastPlayedX-2][lastPlayedY+2] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+        if xInput == 3 and yInput == 3 and grid[lastPlayedX-2][lastPlayedY-2] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
     return
 
 def confirmSmallWin(x,y,playerTurn):
@@ -186,12 +186,3 @@ def shouldGiveFreeMove(pastX,pastY):
     if largeGrid[pastX-1+(pastY-1)*3] != 0:
         openMove()
     return
-
-def countEmptySpaces(array):
-    count = 0
-    for y in range(0,9):
-        for x in range(0,9):
-            if array[x][y] == 0:
-                count+=1
-    print(count)
-    return count
