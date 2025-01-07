@@ -6,11 +6,16 @@ def main():
     if ask_to_import:
         shouldImport()
     else:
+        if standard_ttt:
+            playStandardTTT()
         drawGrid()
         openMove()
     while gameDone == False:
         takeMove()
 
+def playStandardTTT():
+    
+    return
 def shouldImport():
     print("Would you like to import a game? (y/n): ", end="")
     yesOrNoInput = input()

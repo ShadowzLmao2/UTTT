@@ -62,9 +62,9 @@ def openMove():
         freeMove = False
         global pastMoveY
         global pastMoveX
+        checkSmallWin(x1,y1,x2,y2,playerTurn)
         pastMoveX = x2
         pastMoveY = y2
-        checkSmallWin(x1,x1,x2,y2,playerTurn)
         switchPlayer()
         if not gameDone:
             drawGrid()
@@ -144,26 +144,26 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
     inverseX = 4 - xInput
     #Vertical Win
     if yInput == 1 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY+2]  == playerTurn:
-            confirmSmallWin(x,y,playerTurn)
+        confirmSmallWin(x,y,playerTurn)
     if yInput == 2 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
-            confirmSmallWin(x,y,playerTurn)
+        confirmSmallWin(x,y,playerTurn)
     if yInput == 3 and grid[lastPlayedX][lastPlayedY-2] == playerTurn and grid[lastPlayedX][lastPlayedY-1]  == playerTurn:
-            confirmSmallWin(x,y,playerTurn)
+        confirmSmallWin(x,y,playerTurn)
     #Horizontal Win
     if xInput == 1 and grid[lastPlayedX+2][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
-            confirmSmallWin(x,y,playerTurn)
+        confirmSmallWin(x,y,playerTurn)
     if xInput == 2 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX+1][lastPlayedY]  == playerTurn:
-            confirmSmallWin(x,y,playerTurn)
+        confirmSmallWin(x,y,playerTurn)
     if xInput == 3 and grid[lastPlayedX-1][lastPlayedY] == playerTurn and grid[lastPlayedX-2][lastPlayedY]  == playerTurn:
-            confirmSmallWin(x,y,playerTurn)
+        confirmSmallWin(x,y,playerTurn)
     #Diagonal Win
     if yInput == 2 and xInput == 2:
         if grid[lastPlayedX+1][lastPlayedY+1] == playerTurn and grid[lastPlayedX-1][lastPlayedY-1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
         if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
-    else:
-        if (yInput == 1 or yInput == 3) and (xInput == 1 or xInput == 3) and grid[x*3-2][y*3-2] and grid[inverseX+x*3-3][inverseY+y*3-3]:
+    if (yInput == 1 or yInput == 3) and (xInput == 1 or xInput == 3):
+        if grid[x*3-2][y*3-2] and grid[inverseX+x*3-3][inverseY+y*3-3]:
             confirmSmallWin(x,y,playerTurn)
     #Check if middle is correct then looks at the opposite corner
     if grid[x*3-2][y*3-2] == playerTurn:

@@ -9,6 +9,9 @@ def isGameEndable():
 
 def solveFinalBoard(): #Solves the board when the only open spaces are in one board
     return
+
+def singleTTTGameSolver():
+
 def countEmptySpaces():
     count = 0
     global grid
