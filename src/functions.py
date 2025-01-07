@@ -140,6 +140,8 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
         return
     lastPlayedX = x*3-4+xInput
     lastPlayedY = y*3-4+yInput
+    inverseY = 4 - yInput
+    inverseX = 4 - xInput
     #Vertical Win
     if yInput == 1 and grid[lastPlayedX][lastPlayedY+1] == playerTurn and grid[lastPlayedX][lastPlayedY+2]  == playerTurn:
             confirmSmallWin(x,y,playerTurn)
@@ -159,6 +161,9 @@ def checkSmallWin(x,y,xInput,yInput,playerTurn):
         if grid[lastPlayedX+1][lastPlayedY+1] == playerTurn and grid[lastPlayedX-1][lastPlayedY-1] == playerTurn:
             confirmSmallWin(x,y,playerTurn)
         if grid[lastPlayedX+1][lastPlayedY-1] == playerTurn and grid[lastPlayedX-1][lastPlayedY+1] == playerTurn:
+            confirmSmallWin(x,y,playerTurn)
+    else:
+        if (yInput == 1 or yInput == 3) and (xInput == 1 or xInput == 3) and grid[x*3-2][y*3-2] and grid[inverseX+x*3-3][inverseY+y*3-3]:
             confirmSmallWin(x,y,playerTurn)
     #Check if middle is correct then looks at the opposite corner
     if grid[x*3-2][y*3-2] == playerTurn:

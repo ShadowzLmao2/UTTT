@@ -7,6 +7,8 @@ def isGameEndable():
        fillLastSpace()
     drawGrid()
 
+def solveFinalBoard(): #Solves the board when the only open spaces are in one board
+    return
 def countEmptySpaces():
     count = 0
     global grid
