@@ -8,8 +8,9 @@ class winState(Enum):
     win  = 1
     loss = 2
     lose = 2
+    unknown = 3 #temporary
 
-def isGameEndable(): #for UTTT
+def isGameEndable(): 
     if countEmptySpaces() == 1:
        fillLastSpace()
     drawGrid()
@@ -17,14 +18,14 @@ def isGameEndable(): #for UTTT
 def solveFinalBoard(): #Solves the board when the only open spaces are in one board
     return
 
-def singleTTTGameSolver(playerTurn):
+def singleTTTGameSolver(turn):
     if smallEmptySpaces() <= 1 or smallEmptySpaces() == 9:
         return winState.draw
     if winInOne():
         return winState.win
     if loseInOne():
         return winState.lose
-    return
+    return winState.unknown
 
 def winInOne():
     return False
@@ -54,7 +55,7 @@ def fillLastSpace():
     for y in range(0,9):
         for x in range(0,9):
             if grid[x][y] == 0:
-                grid[x][y] = playerTurn
+                grid[x][y] = turn
 
 #Only possible moves on turn one is:
 #11:11,21,31,22,33,

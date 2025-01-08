@@ -19,6 +19,6 @@ def askForBoardState():
                         print("Which player has tile x", bigX, " y", bigY, "?")
                         grid[bigX-1][bigY-1] = int(input())
     print("Whose turn is it?")
-    global playerTurn
-    playerTurn = int(input())
+    global turn
+    turn = int(input())
     return
