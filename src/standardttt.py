@@ -1,6 +1,6 @@
 from config import *
 from functions import *
-from solve_game import *
+from convert_matrix import rotateSmall
 firstMove = True
 standardGrid = (
     ([0]*3),
@@ -54,9 +54,10 @@ def makeMove():
     if y < 1 or y > 3 or x < 1 or x > 3:
         print("Invalid location")
         makeMove()
+    global firstMove
     if firstMove:
-        while (not x == 1 or y == 3) or (not x == 2 and y == 2):
-            rotateSmall()
+        while (x == 2 or x == 3 or y == 3) or ((x == 1 or x == 2) and y == 2):
+            standardGrid = rotateSmall(standardGrid)
         firstMove = False
     if standardGrid[x-1][y-1] == 0:
         standardGrid[x-1][y-1] = turn
@@ -65,4 +66,15 @@ def makeMove():
         checkWin(turn, x, y)
     else:
         print("Invalid location")
-        takeMove()
+        makeMove()
+
+def playStandardTTT():
+    drawStandard()
+    global turn
+    global gameDone
+    turn = 1
+    gameDone = False
+    while gameDone == False:
+        makeMove()
+    return
+playStandardTTT()
