@@ -1,6 +1,7 @@
 from config import *
 from functions import *
 from convert_matrix import rotateSmall
+from solve3x3 import *
 firstMove = True
 standardGrid = (
     ([0]*3),

@@ -12,8 +12,9 @@ class winState(Enum):
 
 def isGameEndable(): 
     if countEmptySpaces() == 1:
-       fillLastSpace()
-    drawGrid()
+        fillLastSpace()
+        drawGrid()
+    return
 
 def solveFinalBoard(): #Solves the board when the only open spaces are in one board
     return
