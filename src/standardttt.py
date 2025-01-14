@@ -25,23 +25,28 @@ def drawStandard():
             else:
                 print("|", end="")
 
-def checkWin(turn, x, y):
+def checkWin(pTurn, x, y):
     global gameDone
-    if y == 1 and standardGrid[x-1][y] == turn and standardGrid[x-1][y+1]:
+    if y == 1 and standardGrid[x-1][1] == pTurn and standardGrid[x-1][2] == pTurn:
         gameDone = True
-    elif y == 2 and standardGrid[x-1][y-2] == turn and standardGrid[x-1][y]:
+    elif y == 2 and standardGrid[x-1][0] == pTurn and standardGrid[x-1][2] == pTurn:
         gameDone = True
-    elif y == 3 and standardGrid[x-1][y-2] == turn and standardGrid[x-1][y-3]:
+    elif y == 3 and standardGrid[x-1][0] == pTurn and standardGrid[x-1][1] == pTurn:
         gameDone = True
-    if x == 1 and standardGrid[x][y-1] == turn and standardGrid[x+1][y-1]:
+    if x == 1 and standardGrid[1][y-1] == pTurn and standardGrid[2][y-1] == pTurn:
         gameDone = True
-    elif x == 2 and standardGrid[x-2][y-1] == turn and standardGrid[x][y-1]:
+    elif x == 2 and standardGrid[0][y-1] == pTurn and standardGrid[2][y-1] == pTurn:
+        gameDone = True
+    elif x == 3 and standardGrid[0][y-1] == pTurn and standardGrid[1][y-1] == pTurn:
         gameDone = True
     elif x == 2 and y == 2:
-        if (standardGrid[0][1] == turn and standardGrid[2][1] == turn) or (standardGrid[0][1] == turn and standardGrid[1][2] == turn):
+        if (standardGrid[0][0] == pTurn and standardGrid[2][2] == pTurn) or (standardGrid[0][2] == pTurn and standardGrid[2][0] == pTurn):
             gameDone = True
-        elif (standardGrid[0][0] == turn and standardGrid[2][2] == turn) or (standardGrid[2][0] == turn and standardGrid[0][2] == turn):
-            gameDone = True
+    if gameDone == True:
+        if standardGrid == 1:
+            print("Game Over: O win")
+        else:
+            print("Game Over: X win")
     return 
 
 def makeMove():
@@ -54,25 +59,29 @@ def makeMove():
     if y < 1 or y > 3 or x < 1 or x > 3:
         print("Invalid location")
         makeMove()
-    global firstMove
-    if firstMove:
-        while (x == 2 or x == 3 or y == 3) or ((x == 1 or x == 2) and y == 2):
-            standardGrid = rotateSmall(standardGrid)
-        firstMove = False
+    global pTurn
     if standardGrid[x-1][y-1] == 0:
-        standardGrid[x-1][y-1] = turn
-        switchPlayer()
+        standardGrid[x-1][y-1] = pTurn
         drawStandard()
-        checkWin(turn, x, y)
+        checkWin(pTurn, x, y)
+        switch3x3Player()
     else:
         print("Invalid location")
         makeMove()
 
+def switch3x3Player():
+    global pTurn
+    if pTurn == 1:
+        pTurn = 2
+    else:
+        pTurn = 1
+    return
+    
 def playStandardTTT():
     drawStandard()
-    global turn
+    global pTurn
     global gameDone
-    turn = 1
+    pTurn = 1
     gameDone = False
     while gameDone == False:
         makeMove()
