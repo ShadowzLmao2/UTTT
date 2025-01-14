@@ -1,8 +1,9 @@
 from config import *
 from functions import *
 from convert_matrix import rotateSmall
-from solve3x3 import *
 firstMove = True
+filledXY = [0,0]
+pTurn = 0
 standardGrid = (
     ([0]*3),
     ([0]*3),
@@ -66,6 +67,7 @@ def makeMove():
         drawStandard()
         checkWin(pTurn, x, y)
         switch3x3Player()
+        isGameWinnable()
     else:
         print("Invalid location")
         makeMove()
@@ -80,7 +82,6 @@ def switch3x3Player():
     
 def playStandardTTT():
     drawStandard()
-    global pTurn
     global gameDone
     pTurn = 1
     gameDone = False
@@ -88,3 +89,29 @@ def playStandardTTT():
         makeMove()
     return
 playStandardTTT()
+
+def isGameWinnable(): 
+    if countBlankSpaces() == 1:
+        fillStandardGrid()
+        checkWin(pTurn, filledXY[0], filledXY[1])
+    return
+
+def countBlankSpaces():
+    count = 0
+    global standardGrid
+    for y in range(0,3):
+        for x in range(0,3):
+            if standardGrid[x][y] == 0:
+                count+=1
+    return count
+    
+def fillStandardGrid():
+    global filledXY
+    for y in range(0,3):
+        for x in range(0,3):
+            if standardGrid[x][y] == 0:
+                standardGrid[x][y] = turn
+                filledXY[0] = x
+                filledXY[1] = y
+                return
+    return
