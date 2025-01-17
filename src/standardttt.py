@@ -49,17 +49,22 @@ def checkWin(pTurn, x, y):
         if (standardGrid[0][0] == pTurn and standardGrid[2][2] == pTurn) or (standardGrid[0][2] == pTurn and standardGrid[2][0] == pTurn):
             gameDone = True
     if gameDone == True:
-        if (pTurn == 1 and not x_and_o_numbers) or (pTurn == 2 and x_and_o_numbers):
-            print("Game Over: X win")
-        elif (pTurn == 2 and not x_and_o_numbers) or (pTurn == 1 and x_and_o_numbers):
-            print("Game Over: O win")
-        if display_moves:
-            showMoves()
+        endGame()
     elif countBlankSpaces() == 0:
+        drawStandard()
         print("Game Over: Draw")
         if display_moves:
             showMoves()
     return 
+
+def endGame():
+    if (pTurn == 1 and not x_and_o_numbers) or (pTurn == 2 and x_and_o_numbers):
+        print("Game Over: X win")
+    elif (pTurn == 2 and not x_and_o_numbers) or (pTurn == 1 and x_and_o_numbers):
+        print("Game Over: O win")
+    if display_moves:
+        showMoves()
+    return
 
 def makeMove():
     global playedX
@@ -71,11 +76,13 @@ def makeMove():
     y = int(input())
     if y < 1 or y > 3 or x < 1 or x > 3:
         print("Invalid location")
-        currentMove -= 1
+        if track_moves:
+            currentMove -= 1
         makeMove()
-    playedX[currentMove] = x
-    playedY[currentMove] = y
-    currentMove += 1
+    if track_moves:
+        playedX[currentMove] = x
+        playedY[currentMove] = y
+        currentMove += 1
     global pTurn
     if standardGrid[x-1][y-1] == 0:
         standardGrid[x-1][y-1] = pTurn
@@ -105,10 +112,16 @@ def playStandardTTT():
 
 def isGameWinnable(): 
     global filledXY
+    global pTurn
     if countBlankSpaces() == 1:
         fillStandardGrid()
-        drawStandard()
         checkWin(pTurn, filledXY[0] + 1, filledXY[1] + 1)
+    for y in range(0,3):
+        for x in range(0,3):
+            if gameDone:
+                return
+            if standardGrid[x][y] == 0:
+                checkWin(pTurn, (x + 1), (y + 1))
     return
 
 def countBlankSpaces():
@@ -132,9 +145,9 @@ def fillStandardGrid():
     return
 
 def showMoves():
-    for x in range(0,8):
+    for x in range(0,currentMove):
         print("Move ",(x+1),": (",playedX[x],", ",playedY[x],")", sep="")
-    print("Move 9: (",(filledXY[0] + 1),", ",(filledXY[1] + 1),")", sep="")
+    print("Move ", (currentMove+1),": (",(filledXY[0] + 1),", ",(filledXY[1] + 1),")", sep="")
     return
 
 playStandardTTT()
