@@ -3,7 +3,8 @@ from functions import *
 from convert_matrix import rotateSmall
 firstMove = True
 filledXY = [0,0]
-pTurn = 0
+gameDone = False
+pTurn = 1
 standardGrid = (
     ([0]*3),
     ([0]*3),
@@ -45,15 +46,15 @@ def checkWin(pTurn, x, y):
         if (standardGrid[0][0] == pTurn and standardGrid[2][2] == pTurn) or (standardGrid[0][2] == pTurn and standardGrid[2][0] == pTurn):
             gameDone = True
     if gameDone == True:
-        if standardGrid == 1:
-            print("Game Over: O win")
-        else:
+        if pTurn == 1:
             print("Game Over: X win")
+        elif pTurn == 2:
+            print("Game Over: O win")
+    elif countBlankSpaces() == 0:
+        print("Game Over: Draw")
     return 
 
 def makeMove():
-    if gameDone:
-        return
     print("x: ", end="")
     x = int(input())
     print("y: ", end="")
@@ -68,6 +69,8 @@ def makeMove():
         checkWin(pTurn, x, y)
         switch3x3Player()
         isGameWinnable()
+        if gameDone:
+            return
     else:
         print("Invalid location")
         makeMove()
@@ -82,23 +85,20 @@ def switch3x3Player():
     
 def playStandardTTT():
     drawStandard()
-    global gameDone
-    pTurn = 1
-    gameDone = False
     while gameDone == False:
         makeMove()
     return
-playStandardTTT()
 
 def isGameWinnable(): 
+    global filledXY
     if countBlankSpaces() == 1:
         fillStandardGrid()
-        checkWin(pTurn, filledXY[0], filledXY[1])
+        drawStandard()
+        checkWin(pTurn, filledXY[0] + 1, filledXY[1] + 1)
     return
 
 def countBlankSpaces():
     count = 0
-    global standardGrid
     for y in range(0,3):
         for x in range(0,3):
             if standardGrid[x][y] == 0:
@@ -113,5 +113,8 @@ def fillStandardGrid():
                 standardGrid[x][y] = turn
                 filledXY[0] = x
                 filledXY[1] = y
+                print()
                 return
     return
+
+playStandardTTT()
