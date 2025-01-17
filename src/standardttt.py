@@ -9,7 +9,8 @@ standardGrid = (
     ([0]*3),
     ([0]*3),
     ([0]*3))
-playedMoves = (([0]*9),([0]*9))
+playedX = (([0]*9))
+playedY = (([0]*9))
 currentMove = 0
 
 def drawStandard():
@@ -48,22 +49,33 @@ def checkWin(pTurn, x, y):
         if (standardGrid[0][0] == pTurn and standardGrid[2][2] == pTurn) or (standardGrid[0][2] == pTurn and standardGrid[2][0] == pTurn):
             gameDone = True
     if gameDone == True:
-        if pTurn == 1:
+        if (pTurn == 1 and not x_and_o_numbers) or (pTurn == 2 and x_and_o_numbers):
             print("Game Over: X win")
-        elif pTurn == 2:
+        elif (pTurn == 2 and not x_and_o_numbers) or (pTurn == 1 and x_and_o_numbers):
             print("Game Over: O win")
+        if display_moves:
+            showMoves()
     elif countBlankSpaces() == 0:
         print("Game Over: Draw")
+        if display_moves:
+            showMoves()
     return 
 
 def makeMove():
+    global playedX
+    global playedY
+    global currentMove
     print("x: ", end="")
     x = int(input())
     print("y: ", end="")
     y = int(input())
     if y < 1 or y > 3 or x < 1 or x > 3:
         print("Invalid location")
+        currentMove -= 1
         makeMove()
+    playedX[currentMove] = x
+    playedY[currentMove] = y
+    currentMove += 1
     global pTurn
     if standardGrid[x-1][y-1] == 0:
         standardGrid[x-1][y-1] = pTurn
@@ -89,8 +101,6 @@ def playStandardTTT():
     drawStandard()
     while gameDone == False:
         makeMove()
-    if display_moves:
-        showMoves()
     return
 
 def isGameWinnable(): 
@@ -122,8 +132,9 @@ def fillStandardGrid():
     return
 
 def showMoves():
-    for x in range(0,9):
-        print( "(", playedMoves[x,0], ", ", playedMoves[x,1], ")" )
+    for x in range(0,8):
+        print("Move ",(x+1),": (",playedX[x],", ",playedY[x],")", sep="")
+    print("Move 9: (",(filledXY[0] + 1),", ",(filledXY[1] + 1),")", sep="")
     return
 
 playStandardTTT()
