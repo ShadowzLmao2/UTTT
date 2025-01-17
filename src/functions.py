@@ -107,32 +107,33 @@ def switchPlayer():
         turn = 1
     return
     
-def checkBigWin(x,y,turn): #x and y are based on largeGrid coords, and can be 0, 1, or 2
-    bigWin = False
+def checkgameDone(x,y,turn): #x and y are based on largeGrid coords, and can be 0, 1, or 2
     global gameDone
     #Horizontal Win
     if y == 0 and largeGrid[x+(y+1)*3] == turn and largeGrid[x+(y-1)*3] == turn:
-        bigWin = True
+        gameDone = True
     elif y == 1 and largeGrid[x+(y+1)*3] == turn and largeGrid[x+(y-1)*3] == turn:
-        bigWin = True
+        gameDone = True
     elif y == 2 and largeGrid[x+(y+-2)*3] == turn and largeGrid[x+(y-1)*3] == turn:
-        bigWin = True
+        gameDone = True
     #Vertical Win
     if x == 0 and largeGrid[x+1+y*3] == turn and largeGrid[x+2+y*3] == turn:
-        bigWin = True
+        gameDone = True
     elif x == 1 and largeGrid[x+1+y*3] == turn and largeGrid[x-1+y*3] == turn:
-        bigWin = True
+        gameDone = True
     elif x == 2 and largeGrid[x-2+y*3] == turn and largeGrid[x-1+y*3] == turn:
-        bigWin = True
+        gameDone = True
     #Diagonals
     if largeGrid[4] == turn and (largeGrid[0] == turn and largeGrid[8] == turn) or (largeGrid[6] == turn and largeGrid[2] == turn):
-        bigWin = True
-    if bigWin:
-        if turn == 1:
-            print("Game Over, Winner is: X")
-        else: 
-            print("Game Over, Winner is: O")
         gameDone = True
+    if gameDone:
+        if turn == 1:
+            print("Game Over: X win")
+        else: 
+            print("Game Over: O win")
+    elif countEmptySpaces() == 0:
+        print("Game Over: Draw")
+        
     return
 
 def checkSmallWin(x,y,xInput,yInput,turn):
@@ -184,10 +185,19 @@ def confirmSmallWin(x,y,turn):
     for miniY in range(0,3):
         for miniX in range(0,3):
             grid[miniX+(x*3-3)][miniY+(y*3-3)] = turn
-    checkBigWin(x-1,y-1,turn)
+    checkgameDone(x-1,y-1,turn)
     return
 
 def shouldGiveFreeMove(pastX,pastY):
     if largeGrid[pastX-1+(pastY-1)*3] != 0:
         openMove()
     return
+
+def countEmptySpaces():
+    count = 0
+    global grid
+    for y in range(0,9):
+        for x in range(0,9):
+            if grid[x][y] == 0:
+                count+=1
+    return count

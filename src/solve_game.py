@@ -34,15 +34,6 @@ def winInOne():
 def loseInOne():
     return False
 
-def countEmptySpaces():
-    count = 0
-    global grid
-    for y in range(0,9):
-        for x in range(0,9):
-            if grid[x][y] == 0:
-                count+=1
-    return count
-
 def smallEmptySpaces():
     count = 0
     global standardGrid

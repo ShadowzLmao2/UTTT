@@ -9,6 +9,8 @@ standardGrid = (
     ([0]*3),
     ([0]*3),
     ([0]*3))
+playedMoves = (([0]*9),([0]*9))
+currentMove = 0
 
 def drawStandard():
     for y in range(0,3):
@@ -87,6 +89,8 @@ def playStandardTTT():
     drawStandard()
     while gameDone == False:
         makeMove()
+    if display_moves:
+        showMoves()
     return
 
 def isGameWinnable(): 
@@ -115,6 +119,11 @@ def fillStandardGrid():
                 filledXY[1] = y
                 print()
                 return
+    return
+
+def showMoves():
+    for x in range(0,9):
+        print( "(", playedMoves[x,0], ", ", playedMoves[x,1], ")" )
     return
 
 playStandardTTT()
